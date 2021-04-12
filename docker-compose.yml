@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  zookeper:
+    image: zookeeper
+    hostname: zookeeper
+    ports:
+      - 2181:2181
+  kafka:
+    image: wurstmeister/kafka
+    hostname: kafka
+    ports: 
+      - "9092:9092"
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment: 
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_CREATE_TOPICS: "messages_in:1:1,messages_out:1:1"
+      KAFKA_CREATE_TOPICS_SEPARATOR: ','
